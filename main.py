@@ -28,16 +28,20 @@ for w in filter_text:
     wordDict[w] += 1
 print(wordDict)
 tf = TermFreq(wordDict, filter_text)
-sorted_tf = sorted(tf.items(), key=operator.itemgetter(1), reverse=True)[:10]
+sorted_tf = sorted(tf.items(), key=operator.itemgetter(1), reverse=True)
 print(sorted_tf)
 senDict = dict.fromkeys(sentenses, 0)
 for s in sentenses:
     tok = word_tokenize(s)
+    length = 0
     weight = 0
     for w in tok:
         if (w in tf.keys()):
+            length += 1
             weight += tf[w]
-    senDict[s] = weight
+    senDict[s] = weight / length
 print(senDict)
-sorted_sd = sorted(senDict.items(), key=operator.itemgetter(1), reverse=True)[:5]
-print(sorted_sd)
+sorted_sd = sorted(senDict.items(), key=operator.itemgetter(1), reverse=True)
+for sen, val in sorted_sd:
+    print(sen)
+    print(val)
